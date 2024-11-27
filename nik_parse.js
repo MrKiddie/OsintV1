@@ -1,11 +1,3 @@
-/*******************************************************
- * #### nik_parse.js ####
- * Parse & Validasi Nomor Induk Kependudukan (NIK) KTP
- * Coded by @bachors 2018.
- * https://github.com/bachors/nik_parse.js
- * Updates will be posted to this site.
- *******************************************************/
-
 const nikParse = function(nik, callback) {
 	
 	// Data wilayah & kodepos
