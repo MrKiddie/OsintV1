@@ -1,4 +1,5 @@
 #!/bin/bash
+#Author Aldi (Human Cyber Security)
 
 # Variabel warna
 CYAN='\033[0;36m'
