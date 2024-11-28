@@ -25,5 +25,3 @@ Sebelum menjalankan alat ini, pastikan Anda telah menginstal beberapa dependensi
    - **jq** diinstall dengan `apt install jq`.
    - **curl** diinstall dengan `apt install curl`.
    - **nik-parse** diinstall dengan `npm i nik-parse -g`.
-
-Dengan pembaruan ini, **README.md** sudah mencakup instruksi lengkap untuk menginstal alat-alat yang diperlukan di **Termux** dan **Linux**.
