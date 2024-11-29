@@ -273,6 +273,41 @@ check_ktp() {
 
     # Menjalankan perintah nik-parse dengan NIK yang dimasukkan
     nik-parse --n "$nik"
+
+    # Mengecek apakah NIK valid atau tidak (dianggap valid jika nik-parse tidak mengeluarkan error)
+    if [ $? -eq 0 ]; then
+        echo "NIK valid. Melanjutkan pengecekan BPJS..."
+        check_bpjs "$nik"
+    else
+        echo "NIK tidak valid. Mohon coba lagi dengan NIK yang benar."
+    fi
+}
+
+# Fungsi untuk mengecek BPJS berdasarkan NIK
+check_bpjs() {
+    nik=$1
+    url="http://simrs.belitung.go.id:3000/api/wsvclaim/pesertaNik?nik=$nik"
+
+    # Mengambil data dari API menggunakan curl dan memeriksa status HTTP
+    response=$(curl -s -w "%{http_code}" -o /tmp/response.txt "$url")
+    
+    # Cek apakah status HTTP 200 (OK)
+    if [ "$response" -eq 200 ]; then
+        # Baca respons dari file sementara
+        response_content=$(cat /tmp/response.txt)
+
+        # Menampilkan respons API dalam format vertikal menggunakan jq
+        echo "$response_content" | jq .
+
+        # Memeriksa apakah respons mengandung data BPJS
+        if echo "$response_content" | jq -e '.data' > /dev/null; then
+            echo "NIK $nik terdaftar di BPJS."
+        else
+            echo
+        fi
+    else
+        echo "Terjadi kesalahan saat mengakses API. Status HTTP: $response"
+    fi
 }
 
 # Fungsi untuk menampilkan menu lagi setelah aksi selesai
